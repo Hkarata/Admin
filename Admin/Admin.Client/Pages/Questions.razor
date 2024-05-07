@@ -19,7 +19,7 @@
     </div>
 </div>
 
-<Admin.Client.Components.Dialog Title="Create Question" CssClass="@dialogCssClass" OnDialogClose="@(OnDialogClosed)">
+<Admin.Client.Components.Dialog  Title="Create Question" IsVisible="IsBlurred"  OnDialogClose="@(OnDialogClosed)">
 
     <EditForm Model="Input" id="question-form">
         <DataAnnotationsValidator />
@@ -70,7 +70,7 @@
 
 <main @onclick="OnClick" >
 
-    <div id="first-container" style="opacity: @(IsBlurred ? "0" : "1")">
+    <div id="first-container" style="opacity: @(IsBlurred ? "0" : "1");transition: 0.3s ease-in-out;">
 
         <section id="question-section" >
 
@@ -120,7 +120,7 @@
 
     </div>
 
-    <div id="second-container" style="opacity: @(IsBlurred ? "0" : "1")">
+    <div id="second-container" style="opacity: @(IsBlurred ? "0" : "1");transition: 0.3s ease-in-out;">
 
         <FluentGrid>
 
@@ -169,17 +169,14 @@
     {
     }
 
-    private string dialogCssClass = "hidden";
 
     private void OpenDialog()
     {
         IsBlurred = true;
-        dialogCssClass = "active";
     }
 
     private void OnDialogClosed()
     {
-        dialogCssClass = "hidden";
         // Perform any actions after the dialog closes (optional)
         IsBlurred = false;
     }

@@ -42,3 +42,15 @@ main {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     transition: 0.3s ease-in-out;
 }
+
+#venueDescr {
+    font-family: 'Fira Code';
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+}
+
+#vData {
+    font-weight: 500;
+}

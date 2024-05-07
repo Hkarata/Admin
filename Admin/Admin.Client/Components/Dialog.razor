@@ -1,10 +1,10 @@
 ﻿@rendermode InteractiveServer
 
-<div id="dialog" class="@CssClass">
+<div id="dialog" style="@Style;display:@(IsVisible ? "flex" : "none");transition: 0.3s step-end;">
 
     <header>
         <span style="border-bottom: 3px solid #f0f0f0;">@Title</span>
-        <FluentIcon @onclick="CloseDialog" Value="@(new Icons.Filled.Size24.CalendarCancel())" Color="@Color.Warning" />
+        <FluentIcon @onclick="CloseDialog" Value="@(new Icons.Filled.Size24.CalendarCancel())" Color="@Color.Custom" CustomColor="#171b24" />
     </header>
     <br/>
     @ChildContent
@@ -12,8 +12,6 @@
 </div>
 
 @code {
-    [Parameter]
-    public string CssClass { get; set; } = "hidden"; // Initially hidden
 
     [Parameter]
     public string Title { get; set; } = "Beautiful Dialog";
@@ -24,9 +22,14 @@
     [Parameter]
     public RenderFragment? ChildContent { get; set; } // Allows custom content within the dialog
 
+    [Parameter]
+    public string? Style { get; set; }
+
+    [Parameter]
+    public bool IsVisible { get; set; }
+
     private async Task CloseDialog()
     {
-        CssClass = "hidden"; // Hide the dialog
         await OnDialogClose.InvokeAsync(); // Optional callback for closing actions
     }
 

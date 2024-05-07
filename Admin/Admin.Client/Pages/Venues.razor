@@ -29,7 +29,7 @@
             
             @foreach (var i in Enumerable.Range(0, 10))
             {
-                <FluentGridItem xs="4" @onclick="ShowSecondDiv">
+                <FluentGridItem xs="3" sm="3" @onclick="ShowSecondDiv">
 
                     <FluentCard Style="padding: 0;position: relative;display: flex; flex-direction:column;gap:10px;cursor:pointer">
                         <img src="/Images/loc2.jpg" width="100%" style="border-radius:5px;" />
@@ -83,7 +83,7 @@
 
 </main>
 
-<Admin.Client.Components.Dialog Title="Create venue" CssClass="@dialogCssClass" OnDialogClose="@(OnDialogClosed)">
+<Admin.Client.Components.Dialog Title="Create venue" IsVisible="IsBlurred" OnDialogClose="@(OnDialogClosed)">
 
     <EditForm Model="Input" id="question-form">
 
@@ -126,7 +126,6 @@
     private bool IsSecondDivVisible = false;
     private string CustomColor = "#171b24";
     public bool IsBlurred = false;
-    private string dialogCssClass = "hidden";
 
     private void ShowSecondDiv()
     {
@@ -141,12 +140,10 @@
     private void OpenDialog()
     {
         IsBlurred = true;
-        dialogCssClass = "active";
     }
 
     private void OnDialogClosed()
     {
-        dialogCssClass = "hidden";
         // Perform any actions after the dialog closes (optional)
         IsBlurred = false;
     }

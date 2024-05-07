@@ -19,7 +19,7 @@
 main {
     display: flex;
     flex-direction: row;
-    height: 100vh;
+    height: 90vh;
     width: 100%;
     gap: 5px;
 }
@@ -34,7 +34,9 @@ main {
     background-color: #ffffff;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
 }
 
 #second-container {

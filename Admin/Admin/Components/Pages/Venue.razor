@@ -1,4 +1,5 @@
 ﻿@page "/venues/venue/{id:guid}"
+@rendermode InteractiveServer
 
 <PageTitle>@VenueName</PageTitle>
 
@@ -13,9 +14,37 @@
         
         <img src="/Images/building.png" width="100%" style="border-radius:5px;" />
 
+        <br/>
+
+        <div id="venueDescr">
+
+            <section @onclick="OpenDialog" style="cursor:pointer;top:0%;right:0%;padding: 10px;position: absolute;background-color:#f0f0ee;display:flex;justify-content:center;align-items:center;border-radius:50%">
+                <FluentIcon Value="@(new Icons.Regular.Size20.CodeTextEdit())" Color="Color.Custom" CustomColor="#171b24" />
+            </section>
+
+            <span>Location: <v id="vData">Posta, Dar es Salaam</v></span>
+
+            <span>Capacity: <v id="vData">{1000}</v></span>
+
+            <span>Phone: <v id="vData">+255 754 123 456</v></span>
+
+            <div style="display:flex;flex-direction:row;flex-wrap:wrap;gap:10px;align-items: center;justify-content:space-between;">
+                <FluentBadge Appearance="Appearance.Accent" Style="font-family: 'Fira Code';font-size: 16px">
+                    Available
+                </FluentBadge>
+
+                <span>No. of Sessions: <v id="vData">{23}</v></span>
+            </div>
+
+            <Admin.Client.Components.Dialog Style="left:68%" Title="Edit venue" IsVisible="IsBlurred" OnDialogClose="@(OnDialogClosed)">
+                ssss
+            </Admin.Client.Components.Dialog>
+
+        </div>
+
     </div>
 
-    <div id="second-container">
+    <div id="second-container" style="opacity: @(IsBlurred ? "0" : "1");transition: 0.3s ease-in-out">
         
         <span style="font-family: 'Fira Code';margin-left: auto;border-bottom: 3px solid #f0f0f0;">Sessions</span>
 
@@ -41,4 +70,37 @@
 
     [SupplyParameterFromQuery]
     private string? Capacity { get; set; }
+
+    public bool IsBlurred = false;
+    private string CustomColor = "#171b24";
+    private string dialogCssClass = "hidden";
+
+    private void OpenDialog()
+    {
+        IsBlurred = true;
+        dialogCssClass = "active";
+    }
+
+    private void OnDialogClosed()
+    {
+        dialogCssClass = "hidden";
+        // Perform any actions after the dialog closes (optional)
+        IsBlurred = false;
+    }
+
+    private void OnClick()
+    {
+        IsBlurred = false;
+        // Perform any actions when the button is clicked
+        OnDialogClosed();
+    }
+
+    private sealed class VenueEditModel
+    {
+        [Requ]
+        public string VenueName { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
+        public string Region { get; set; } = string.Empty;
+        public string Capacity { get; set; } = string.Empty;
+    }
 }
