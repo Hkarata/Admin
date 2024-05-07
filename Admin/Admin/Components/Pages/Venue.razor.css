@@ -54,3 +54,44 @@ main {
 #vData {
     font-weight: 500;
 }
+
+.mySect {
+    cursor: pointer;
+    top: 0%;
+    right: 0%;
+    padding: 10px;
+    position: absolute;
+    background-color: #f0f0ee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%
+}
+
+    .mySect:hover {
+        background-color: #171b24;
+    }
+
+#tabular{
+    display:flex;
+    flex-direction: row;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.innerDiv{
+    border-radius: 5px;
+    border: 1px solid #f0f0ee;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    font-family: 'Fira Code';
+    gap: 10px;
+    width: 178px;
+    cursor: pointer;
+}
+
+    .innerDiv:hover {
+        background-color: #f0f0ee;
+
+    }

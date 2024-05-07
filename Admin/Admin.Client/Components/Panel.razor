@@ -1,0 +1,38 @@
+﻿@page "/panel"
+
+<div id="Panel">
+    
+    <header>
+
+        <span style="border-bottom: 3px solid #f0f0f0;font-family:'Fira Code'">@Title</span>
+        <FluentIcon Style="cursor:pointer;" Value="@(new Icons.Regular.Size24.PanelLeftExpand())" Color="Color.Custom" CustomColor="#171b24"/>
+    </header>
+
+    @ChildContent
+
+</div>
+
+
+@code {
+
+    [Parameter]
+    public string Title { get; set; } = "Beautiful Panel";
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; } // Allows custom content within the dialog
+
+    [Parameter]
+    public string? Style { get; set; }
+
+    [Parameter]
+    public bool IsVisible { get; set; }
+
+    private async Task ClosePanel()
+    {
+        await OnPanelClose.InvokeAsync(); // Optional callback for closing actions
+    }
+
+    [Parameter]
+    public EventCallback<object> OnPanelClose { get; set; } // Optional callback for closing actions
+
+}

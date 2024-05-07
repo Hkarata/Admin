@@ -1,0 +1,22 @@
+﻿#Panel {
+    position: fixed;
+    right: 0.5%;
+    top: 1%;
+    width: 350px;
+    height: 98vh;
+    overflow: auto;
+    background-color: white;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease-in-out;
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Fira Code';
+}

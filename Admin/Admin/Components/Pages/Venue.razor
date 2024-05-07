@@ -18,8 +18,8 @@
 
         <div id="venueDescr">
 
-            <section @onclick="OpenDialog" style="cursor:pointer;top:0%;right:0%;padding: 10px;position: absolute;background-color:#f0f0ee;display:flex;justify-content:center;align-items:center;border-radius:50%">
-                <FluentIcon Value="@(new Icons.Regular.Size20.CodeTextEdit())" Color="Color.Custom" CustomColor="#171b24" />
+            <section @onclick="OpenDialog" class="mySect" @onmouseover="HighlightAction" @onmouseleave="UnHighlightAction">
+                <FluentIcon Value="@(new Icons.Regular.Size20.CodeTextEdit())" Color="Color.Custom" CustomColor="@CustomColor" />
             </section>
 
             <span>Location: <v id="vData">Posta, Dar es Salaam</v></span>
@@ -37,7 +37,41 @@
             </div>
 
             <Admin.Client.Components.Dialog Style="left:68%" Title="Edit venue" IsVisible="IsBlurred" OnDialogClose="@(OnDialogClosed)">
-                ssss
+                
+                <EditForm Model="EditModel" id="question-form">
+
+                    <DataAnnotationsValidator />
+
+                    <label for="VenueName">Venue name</label>
+                    <InputText @bind-Value="EditModel.VenueName" id="VenueName" />
+                    <ValidationMessage For="@(() => EditModel.VenueName)" class="error" />
+
+                    <label for="address">Address</label>
+                    <InputText @bind-Value="EditModel.Address" id="address" />
+                    <ValidationMessage For="@(() => EditModel.Address)" class="error" />
+
+                    <label for="region">Region</label>
+                    <InputSelect @bind-Value="EditModel.Region" id="region">
+                        <option value="">Select region</option>
+                        <option value="Dar es Salaam">Dar es Salaam</option>
+                        <option value="Arusha">Arusha</option>
+                        <option value="Dodoma">Dodoma</option>
+                        <option value="Mwanza">Mwanza</option>
+                    </InputSelect>
+                    <ValidationMessage For="@(() => EditModel.Region)" class="error" />
+
+                    <label for="Capacity">Venue capacity</label>
+                    <InputNumber @bind-Value="EditModel.Capacity" id="Capacity" min="20" />
+                    <ValidationMessage For="@(() => EditModel.Capacity)" class="error" />
+
+
+                    <FluentButton Type="ButtonType.Submit" BackgroundColor="#171b24" Color="#FFFFFF" Style="font-family: 'Fira Code';margin-top:10px">
+                        <FluentIcon Value="@(new Icons.Regular.Size20.TrayItemAdd())" Slot="start" Color="Color.Custom" CustomColor="#FFFFFF" />
+                        Create venue
+                    </FluentButton>
+
+                </EditForm>
+
             </Admin.Client.Components.Dialog>
 
         </div>
@@ -48,6 +82,33 @@
         
         <span style="font-family: 'Fira Code';margin-left: auto;border-bottom: 3px solid #f0f0f0;">Sessions</span>
 
+
+        <div id="tabular">
+            
+            @foreach (var i in Enumerable.Range(1,10))
+            {
+                <div class="innerDiv">
+                    <span style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;gap:10px">
+                        <span>11:00 - 11:45</span>
+                        @if(i % 2 == 0)
+                        {
+                            <FluentIcon Value="@(new Icons.Regular.Size20.CheckmarkStarburst())" />
+                        }
+                    </span>
+                    <span style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;gap:10px">
+                        <FluentIcon Value="@(new Icons.Regular.Size20.CalendarDate())" Color="Color.Custom" CustomColor="#bcbfbd" />
+                        <span style="font-size:12px;">{@DateTime.Now.ToShortDateString()}</span>
+                    </span>
+                    <span style="display:flex;flex-direction:row;justify-content:start;align-items:center;gap:2px">
+                        <FluentIcon Value="@(new Icons.Regular.Size20.People())" Color="Color.Custom" CustomColor="#bcbfbd" />
+                        <span style="font-size:12px;">{@i/10}</span>
+                    </span>
+                    <FluentProgress Stroke="ProgressStroke.Normal" Max="10" Min="0" Value="@i" Color="#00bcf2"></FluentProgress>
+                </div>
+            }
+
+
+        </div>
 
 
     </div>
@@ -75,6 +136,16 @@
     private string CustomColor = "#171b24";
     private string dialogCssClass = "hidden";
 
+    private void HighlightAction()
+    {
+        CustomColor = "#f0f0ee";
+    }
+
+    private void UnHighlightAction()
+    {
+        CustomColor = "#171b24";
+    }
+
     private void OpenDialog()
     {
         IsBlurred = true;
@@ -95,12 +166,77 @@
         OnDialogClosed();
     }
 
+    [SupplyParameterFromForm]
+    private VenueEditModel EditModel { get; set; } = new();
+
     private sealed class VenueEditModel
     {
-        [Requ]
+        [Required, Display(Name = "Venue name")]
         public string VenueName { get; set; } = string.Empty;
+
+        [Required, Display(Name = "Address")]
         public string Address { get; set; } = string.Empty;
+
+        [Required, Display(Name = "Region")]
         public string Region { get; set; } = string.Empty;
-        public string Capacity { get; set; } = string.Empty;
+
+        [Required, Display(Name = "Capacity")]
+        public int Capacity { get; set; } 
     }
 }
+
+
+<style>
+
+    #question-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-family: 'Fira Code';
+    }
+
+    #VenueName {
+        outline: none;
+        border-radius: 5px;
+        height: 30px;
+        font-size: 16px;
+        padding-left: 3px;
+        font-family: 'Fira Code';
+        border: 0.5px solid;
+    }
+
+    #address {
+        outline: none;
+        border-radius: 5px;
+        height: 30px;
+        font-size: 16px;
+        padding-left: 3px;
+        font-family: 'Fira Code';
+        border: 0.5px solid;
+    }
+
+    #region {
+        outline: none;
+        border-radius: 5px;
+        height: 30px;
+        font-size: 16px;
+        padding-left: 3px;
+        font-family: 'Fira Code';
+        border: 0.5px solid;
+    }
+
+    #Capacity {
+        outline: none;
+        border-radius: 5px;
+        height: 30px;
+        font-size: 16px;
+        padding-left: 3px;
+        font-family: 'Fira Code';
+        border: 0.5px solid;
+    }
+
+    .error {
+        color: red;
+        font-style: italic;
+    }
+</style>
