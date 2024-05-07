@@ -1,2 +1,44 @@
-﻿body {
+﻿#topBar {
+    background-color: #ffffff;
+    padding: 10px;
+    display: flex;
+    height: 30px;
+    font-family: Bahnschrift;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    height: 98vh;
+    width: 100%;
+    gap: 5px;
+}
+
+#first-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 30%;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    transition: 0.3s ease-in-out;
+}
+
+#second-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 70%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease-in-out;
 }

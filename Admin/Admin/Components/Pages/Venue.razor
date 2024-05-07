@@ -1,1 +1,44 @@
-﻿@page "/venues/venue"
+﻿@page "/venues/venue/{id:guid}"
+
+<PageTitle>@VenueName</PageTitle>
+
+<div id="topBar">
+    <span>@VenueName</span>
+    <span>Quick Actions</span>
+</div>
+
+<main>
+
+    <div id="first-container">
+        
+        <img src="/Images/building.png" width="100%" style="border-radius:5px;" />
+
+    </div>
+
+    <div id="second-container">
+        
+        <span style="font-family: 'Fira Code';margin-left: auto;border-bottom: 3px solid #f0f0f0;">Sessions</span>
+
+
+
+    </div>
+
+</main>
+
+@code{
+
+    [Parameter]
+    public Guid id { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? VenueName { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Address { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Region { get; set; }
+
+    [SupplyParameterFromQuery]
+    private string? Capacity { get; set; }
+}

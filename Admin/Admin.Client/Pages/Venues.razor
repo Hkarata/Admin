@@ -1,5 +1,6 @@
 ﻿@page "/venues"
 @rendermode InteractiveServer
+@using Microsoft.AspNetCore.WebUtilities
 @attribute [StreamRendering]
 
 @inject NavigationManager NavManager
@@ -73,7 +74,7 @@
 
         </div>
 
-        <FluentButton OnClick="@(() => NavManager.NavigateTo("/venues/venue"))" BackgroundColor="#171b24" Color="white" Style="font-family:'Fira Code';margin-top:auto">
+        <FluentButton OnClick="GoToVenue" BackgroundColor="#171b24" Color="white" Style="font-family:'Fira Code';margin-top:auto">
             <FluentIcon Value="@(new Icons.Regular.Size20.ArrowFlowDiagonalUpRight())" Slot="start" Color="Color.Custom" CustomColor="#FFFFFF"/>
             Advanced view
         </FluentButton>
@@ -183,6 +184,20 @@
 
         [Required, Display(Name = "Venue capacity")]
         public int Capacity { get; set; }
+    }
+
+    private Dictionary<string, string?> sampleData = new (){
+        {"VenueName", "Julius Nyerere International Conference Centre"},
+        {"Address", "Posta, Dar es Salaam"},
+        {"Region", "Dar es Salaam"},
+        {"Capacity", "1000"}
+    };
+
+    private void GoToVenue()
+    {
+        //NavManager.NavigateTo("/venues/venue/12345678-1234-1234-1234-123456789012");
+
+        NavManager.NavigateTo(QueryHelpers.AddQueryString("/venues/venue/12345678-1234-1234-1234-123456789012", sampleData));
     }
 }
 
