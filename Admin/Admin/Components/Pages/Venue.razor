@@ -5,12 +5,18 @@
 
 <div id="topBar">
     <span>@VenueName</span>
-    <span>Quick Actions</span>
+    <div style="display:flex;flex-direction:row;justify-content:center;align-items:center;gap:10px">
+        <span>Quick Actions</span>
+
+        <section @onclick="OpenDialog2" id="mySect" class="iconSect" @onmouseover="HighAction" @onmouseleave="UnHighAction">
+            <FluentIcon Value="@(new Icons.Regular.Size20.Add())" Color="Color.Custom" CustomColor="@CustomColor2" />
+        </section>
+    </div>
 </div>
 
-<main>
+<main style="opacity: @(IsDialogVisible ? "0.1" : "1");pointer-events:@(IsDialogVisible ? "none" : ""); transition: 0.3s opacity ease-in-out">
 
-    <div id="first-container">
+    <div id="first-container" style="display: @(IsPanelVisible ? "none" : "flex");transition: 0.3s ease-in-out">
         
         <img src="/Images/building.png" width="100%" style="border-radius:5px;" />
 
@@ -84,13 +90,13 @@
 
 
         <div id="tabular">
-            
-            @foreach (var i in Enumerable.Range(1,10))
+
+            @foreach (var i in Enumerable.Range(1, 100))
             {
-                <div class="innerDiv">
+                <div class="innerDiv" @onclick="OpenPanel">
                     <span style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;gap:10px">
                         <span>11:00 - 11:45</span>
-                        @if(i % 2 == 0)
+                        @if (i % 2 == 0)
                         {
                             <FluentIcon Value="@(new Icons.Regular.Size20.CheckmarkStarburst())" />
                         }
@@ -109,11 +115,43 @@
 
 
         </div>
+       
 
+        <Admin.Client.Components.Panel Title="Some Session" IsVisible="IsPanelVisible" OnPanelClose="@(OnPanelClosed)">
+            some panel
+        </Admin.Client.Components.Panel>
 
     </div>
 
 </main>
+
+<Admin.Client.Components.Dialog Title="Create session" IsVisible="IsDialogVisible" OnDialogClose="@(OnDialogClosed2)">
+
+    <EditForm Model="CreateSession" id="createSession">
+        <DataAnnotationsValidator />
+
+        <label for="Date">Date</label>
+        <InputDate @bind-Value="CreateSession.Date" id="Date" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        <ValidationMessage For="@(() => CreateSession.Date)" class="error" />
+
+        <div id="holder">
+            <label for="StartTime">Start time</label>
+            <input type="time" @bind-value="CreateSession.StartTime" id="StartTime" />
+            <ValidationMessage For="@(() => CreateSession.StartTime)" class="error" />
+
+            <label for="EndTime">End time</label>
+            <input type="time" @bind-value="CreateSession.EndTime" id="EndTime" />
+            <ValidationMessage For="@(() => CreateSession.EndTime)" class="error" />
+        </div>
+
+
+        <FluentButton Type="ButtonType.Submit" BackgroundColor="#171b24" Color="#FFFFFF" Style="font-family: 'Fira Code';margin-top:10px">
+            <FluentIcon Value="@(new Icons.Regular.Size20.TrayItemAdd())" Slot="start" Color="Color.Custom" CustomColor="#FFFFFF" />
+            Create session
+        </FluentButton>
+    </EditForm>
+
+</Admin.Client.Components.Dialog>
 
 @code{
 
@@ -133,8 +171,10 @@
     private string? Capacity { get; set; }
 
     public bool IsBlurred = false;
+    public bool IsPanelVisible = false;
+    public bool IsDialogVisible = false;
     private string CustomColor = "#171b24";
-    private string dialogCssClass = "hidden";
+    private string CustomColor2 = "#171b24";
 
     private void HighlightAction()
     {
@@ -146,16 +186,23 @@
         CustomColor = "#171b24";
     }
 
+    private void HighAction()
+    {
+        CustomColor2 = "#f0f0ee";
+    }
+
+    private void UnHighAction()
+    {
+        CustomColor2 = "#171b24";
+    }
+
     private void OpenDialog()
     {
         IsBlurred = true;
-        dialogCssClass = "active";
     }
 
     private void OnDialogClosed()
     {
-        dialogCssClass = "hidden";
-        // Perform any actions after the dialog closes (optional)
         IsBlurred = false;
     }
 
@@ -164,6 +211,35 @@
         IsBlurred = false;
         // Perform any actions when the button is clicked
         OnDialogClosed();
+    }
+
+    private void OpenDialog2()
+    {
+        IsDialogVisible = true;
+    }
+
+    private void OnDialogClosed2()
+    {
+        IsDialogVisible = false;
+    }
+
+    private void OnClick2()
+    {
+        IsDialogVisible = false;
+        // Perform any actions when the button is clicked
+        OnDialogClosed2();
+    }
+
+    private void OpenPanel()
+    {
+        // Perform any actions when the panel is clicked
+        IsPanelVisible = true;
+    }
+
+    private void OnPanelClosed()
+    {
+        // Perform any actions when the panel is closed
+        IsPanelVisible = false;
     }
 
     [SupplyParameterFromForm]
@@ -182,6 +258,16 @@
 
         [Required, Display(Name = "Capacity")]
         public int Capacity { get; set; } 
+    }
+
+    [SupplyParameterFromForm]
+    private SessionModel CreateSession { get; set; } = new();
+
+    private sealed class SessionModel
+    {
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public DateTime Date { get; set; }
     }
 }
 
@@ -238,5 +324,50 @@
     .error {
         color: red;
         font-style: italic;
+    }
+
+    #createSession{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-family: 'Fira Code';
+    }
+
+    #Date{
+        outline: none;
+        border-radius: 5px;
+        height: 30px;
+        font-size: 16px;
+        padding-left: 3px;
+        font-family: 'Fira Code';
+        border: 0.5px solid;
+    }
+
+    #holder{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    #StartTime{
+        outline: none;
+        border-radius: 5px;
+        height: 30px;
+        font-size: 16px;
+        padding-left: 3px;
+        font-family: 'Fira Code';
+        border: 0.5px solid;
+    }
+    #EndTime{
+        outline: none;
+        border-radius: 5px;
+        height: 30px;
+        font-size: 16px;
+        padding-left: 3px;
+        font-family: 'Fira Code';
+        border: 0.5px solid;
     }
 </style>

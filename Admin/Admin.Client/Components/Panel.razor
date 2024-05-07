@@ -1,12 +1,15 @@
 ﻿@page "/panel"
 
-<div id="Panel">
+<div id="Panel" style="@Style;display: @(IsVisible ? "flex" : "none");transition: 0.3s ease-in-out" >
     
     <header>
 
         <span style="border-bottom: 3px solid #f0f0f0;font-family:'Fira Code'">@Title</span>
-        <FluentIcon Style="cursor:pointer;" Value="@(new Icons.Regular.Size24.PanelLeftExpand())" Color="Color.Custom" CustomColor="#171b24"/>
+
+        <FluentIcon @onclick="ClosePanel" Style="cursor:pointer;" Value="@(new Icons.Regular.Size24.PanelLeftExpand())" Color="Color.Custom" CustomColor="#171b24"/>
     </header>
+
+    <br/>
 
     @ChildContent
 

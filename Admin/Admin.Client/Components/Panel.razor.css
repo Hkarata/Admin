@@ -1,16 +1,17 @@
 ﻿#Panel {
     position: fixed;
     right: 0.5%;
-    top: 1%;
+    top: 8.5%;
     width: 350px;
-    height: 98vh;
+    height: 91vh;
     overflow: auto;
     background-color: white;
     padding: 10px;
     box-sizing: border-box;
     border-radius: 5px;
+    flex-direction: column;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-    transition: 0.3s ease-in-out;
+    transition: 3s ease-in-out;
 }
 
 header{

@@ -8,7 +8,7 @@
     align-items: center;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    transition: 0.3s ease-in-out;
+    transition: 0.3s width ease-in-out;
 }
 
 main {
@@ -28,7 +28,6 @@ main {
     border-radius: 5px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
-    transition: 0.3s ease-in-out;
 }
 
 #second-container {
@@ -75,9 +74,16 @@ main {
 #tabular{
     display:flex;
     flex-direction: row;
+    justify-content:center;
     gap: 5px;
     flex-wrap: wrap;
+    margin-top: 10px;
+    overflow-y: auto;
+    height: 86%;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
 }
+
 
 .innerDiv{
     border-radius: 5px;
@@ -89,9 +95,11 @@ main {
     gap: 10px;
     width: 178px;
     cursor: pointer;
+    height:fit-content;
 }
 
     .innerDiv:hover {
         background-color: #f0f0ee;
 
     }
+

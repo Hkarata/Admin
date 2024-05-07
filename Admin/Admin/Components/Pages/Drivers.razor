@@ -129,7 +129,6 @@
 
 @code{
 
-    private string dialogCssClass = "hidden";
     public bool IsBlurred = false;
     bool? canceled;
     private string CustomColor = "#171b24";
@@ -137,12 +136,10 @@
     private void OpenDialog()
     {
         IsBlurred = true;
-        dialogCssClass = "active";
     }
 
     private void OnDialogClosed()
     {
-        dialogCssClass = "hidden";
         // Perform any actions after the dialog closes (optional)
         IsBlurred = false;
     }
