@@ -1,0 +1,242 @@
+﻿@page "/venues"
+@rendermode InteractiveServer
+@attribute [StreamRendering]
+
+@inject NavigationManager NavManager
+
+<PageTitle> Venues </PageTitle>
+
+<div id="topBar">
+    <span>Venues</span>
+
+    <div>
+        <span>Quick Actions</span>
+
+        <section @onclick="OpenDialog" id="mySect" class="iconSect" @onmouseover="HighlightAction" @onmouseleave="UnHighlightAction">
+            <FluentIcon Value="@(new Icons.Regular.Size20.TrayItemAdd())" Color="Color.Custom" CustomColor="@CustomColor" />
+        </section>
+
+    </div>
+</div>
+
+<main>
+
+    <div id="first-container" style="flex-basis: @(IsSecondDivVisible ? "70%" : "100%");transition:0.3s ease-in-out;opacity: @(IsBlurred ? "0" : "1")">
+        
+        <FluentGrid>
+
+            
+            @foreach (var i in Enumerable.Range(0, 10))
+            {
+                <FluentGridItem xs="4" @onclick="ShowSecondDiv">
+
+                    <FluentCard Style="padding: 0;position: relative;display: flex; flex-direction:column;gap:10px;cursor:pointer">
+                        <img src="/Images/loc2.jpg" width="100%" style="border-radius:5px;" />
+                        <span style="position: absolute;top:2%;right:2%;font-family: 'Fira Code';background-color:white; padding: 3px;border-radius:5px">
+                            Dar es Salaam
+                        </span>
+                        <span style="font-family:'Fira Code'">Julius Nyerere International Conference Centre</span>
+                    </FluentCard>
+                </FluentGridItem>
+            }
+
+        </FluentGrid>
+
+    </div>
+
+    <div id="second-container" style="display: @(IsSecondDivVisible ? "" : "none");opacity: @(IsBlurred ? "0" : "1"); transition: 0.3s ease-in-out;position:relative">
+        
+        <section @onclick="HideSecondDiv" style="cursor:pointer;position:absolute;top:2%;right:4%;background-color:white;border-radius:50%;padding:8px;display:flex;justify-content:center;align-items:center;">
+            <FluentIcon Value="@(new Icons.Regular.Size24.CalendarCancel())" Color="Color.Custom" CustomColor="#ff495c" />
+        </section>
+
+        <img src="/Images/loc2.jpg" width="100%" style="border-radius:5px;" />
+        <br /> <br />
+        <span id="venueName">Julius Nyerere International Conference Centre</span>
+        <br />
+
+        <div id="venueDescr">
+
+            <span>Location: <v id="vData">Posta, Dar es Salaam</v></span>
+
+            <span>Capacity: <v id="vData">{1000}</v></span>
+
+            <span>Phone: <v id="vData">+255 754 123 456</v></span>
+
+            <div style="display:flex;flex-direction:row;flex-wrap:wrap;gap:10px;align-items: center;justify-content:space-between;">
+                <FluentBadge Appearance="Appearance.Accent" Style="font-family: 'Fira Code';font-size: 16px">
+                    Available
+                </FluentBadge>
+
+                <span>No. of Sessions: <v id="vData">{23}</v></span>
+            </div>
+
+        </div>
+
+        <FluentButton OnClick="@(() => NavManager.NavigateTo("/venues/venue"))" BackgroundColor="#171b24" Color="white" Style="font-family:'Fira Code';margin-top:auto">
+            <FluentIcon Value="@(new Icons.Regular.Size20.ArrowFlowDiagonalUpRight())" Slot="start" Color="Color.Custom" CustomColor="#FFFFFF"/>
+            Advanced view
+        </FluentButton>
+
+    </div>
+
+</main>
+
+<Admin.Client.Components.Dialog Title="Create venue" CssClass="@dialogCssClass" OnDialogClose="@(OnDialogClosed)">
+
+    <EditForm Model="Input" id="question-form">
+
+        <DataAnnotationsValidator />
+
+        <label for="VenueName">Venue name</label>
+        <InputText @bind-Value="Input.VenueName" id="VenueName"/>
+        <ValidationMessage For="@(() => Input.VenueName)" class="error" />
+
+        <label for="address">Address</label>
+        <InputText @bind-Value="Input.Address" id="address"/>
+        <ValidationMessage For="@(() => Input.Address)" class="error" />
+
+        <label for="region">Region</label>
+        <InputSelect @bind-Value="Input.Region" id="region">
+            <option value="">Select region</option>
+            <option value="Dar es Salaam">Dar es Salaam</option>
+            <option value="Arusha">Arusha</option>
+            <option value="Dodoma">Dodoma</option>
+            <option value="Mwanza">Mwanza</option>
+        </InputSelect>
+        <ValidationMessage For="@(() => Input.Region)" class="error" />
+
+        <label for="Capacity">Venue capacity</label>
+        <InputNumber @bind-Value="Input.Capacity"  id="Capacity" min="20"/>
+        <ValidationMessage For="@(() => Input.Capacity)" class="error"/>
+
+            
+        <FluentButton Type="ButtonType.Submit" BackgroundColor="#171b24" Color="#FFFFFF" Style="font-family: 'Fira Code';margin-top:10px">
+            <FluentIcon Value="@(new Icons.Regular.Size20.TrayItemAdd())" Slot="start" Color="Color.Custom" CustomColor="#FFFFFF"/>
+            Create venue
+        </FluentButton>
+
+    </EditForm>
+
+
+</Admin.Client.Components.Dialog>
+
+@code{
+    private bool IsSecondDivVisible = false;
+    private string CustomColor = "#171b24";
+    public bool IsBlurred = false;
+    private string dialogCssClass = "hidden";
+
+    private void ShowSecondDiv()
+    {
+        IsSecondDivVisible = true;
+    }
+
+    private void HideSecondDiv()
+    {
+        IsSecondDivVisible = false;
+    }
+
+    private void OpenDialog()
+    {
+        IsBlurred = true;
+        dialogCssClass = "active";
+    }
+
+    private void OnDialogClosed()
+    {
+        dialogCssClass = "hidden";
+        // Perform any actions after the dialog closes (optional)
+        IsBlurred = false;
+    }
+
+    private void OnClick()
+    {
+        IsBlurred = false;
+        // Perform any actions when the button is clicked
+        OnDialogClosed();
+    }
+
+    private void HighlightAction()
+    {
+        CustomColor = "#ffffff";
+    }
+
+    private void UnHighlightAction()
+    {
+        CustomColor = "#171b24";
+    }
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+
+    private sealed class InputModel
+    {
+        [Required, Display(Name = "Venue name")]
+        public string VenueName { get; set; } = string.Empty;
+
+        [Required, Display(Name = "Address")]
+        public string Address { get; set; } = string.Empty;
+
+        [Required, Display(Name = "Region")]
+        public string Region { get; set; } = string.Empty;
+
+        [Required, Display(Name = "Venue capacity")]
+        public int Capacity { get; set; }
+    }
+}
+
+<style>
+
+    #question-form{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-family: 'Fira Code';
+    }
+
+    #VenueName{
+        outline: none;
+        border-radius: 5px;
+        height: 30px;
+        font-size: 16px;
+        padding-left: 3px;
+        font-family: 'Fira Code';
+        border: 0.5px solid;
+    }
+
+    #address{
+        outline: none;
+        border-radius: 5px;
+        height: 30px;
+        font-size: 16px;
+        padding-left: 3px;
+        font-family: 'Fira Code';
+        border: 0.5px solid;
+    }
+
+    #region{
+        outline: none;
+        border-radius: 5px;
+        height: 30px;
+        font-size: 16px;
+        padding-left: 3px;
+        font-family: 'Fira Code';
+        border: 0.5px solid;
+    }
+
+    #Capacity{
+        outline: none;
+        border-radius: 5px;
+        height: 30px;
+        font-size: 16px;
+        padding-left: 3px;
+        font-family: 'Fira Code';
+        border: 0.5px solid;
+    }
+
+    .error {
+        color: red;
+        font-style: italic;
+    }
+</style>

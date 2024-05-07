@@ -1,0 +1,33 @@
+.sideBar {
+    width: 60px;
+    background-color: #2b313d;
+    border-radius: 12px;
+}
+
+#sideBarHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 10px;
+    color: white;
+    font-family: Bahnschrift;
+    width: 100%;
+}
+
+    #sideBarHeader img {
+        width: 50px;
+        height: 50px;
+        border-radius: 60%;
+    }
+
+    #sideBarHeader section {
+        background-color: #171b24;
+        padding: 8px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+    }
+

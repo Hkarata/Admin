@@ -1,0 +1,43 @@
+﻿@using Microsoft.FluentUI.AspNetCore.Components
+
+@rendermode InteractiveServer
+
+<div id="sideBarHeader">
+    <img src="/Images/safety.svg" alt="Logo" style="display: @(IsMinimized ? "none" : ""); transition: 3s"/>
+    <span style="display: @(IsMinimized ? "none" : ""); transition: 3s; width:100px">Admin Panel</span>
+    <section>
+        @if(IsMinimized)
+        {
+            <FluentIcon @onclick="ToggleSideBar" Value="@(new Icons.Regular.Size24.ArrowCircleRight())" Color="Color.Custom" CustomColor="#FFFFFF" />
+        }
+        else
+        {
+            <FluentIcon @onclick="ToggleSideBar" Value="@(new Icons.Regular.Size24.ArrowCircleLeft())" Color="Color.Custom" CustomColor="#FFFFFF" />
+        }
+    </section>
+</div>
+
+<div style="margin-top: 10px;">
+
+    @if (IsMinimized)
+    {
+        <NavIcons />
+    }
+    else
+    {
+        <NavItems />
+    }
+
+</div>
+
+
+
+@code {
+    private bool IsMinimized = true;
+
+    private void ToggleSideBar()
+    {
+        IsMinimized = !IsMinimized;
+    }
+}
+

@@ -1,0 +1,178 @@
+﻿@page "/drivers"
+@rendermode InteractiveServer
+
+@inject IDialogService DialogService
+
+<PageTitle>Drivers</PageTitle>
+
+<div id="topBar">
+    <span>Drivers</span>
+
+    <div>
+        <span>Quick Actions</span>
+
+        <section @onclick="OpenDialog" id="mySect" class="iconSect" @onmouseover="HighlightAction" @onmouseleave="UnHighlightAction">
+            <FluentIcon Value="@(new Icons.Filled.Size24.TasksApp())" Color="Color.Custom" CustomColor="@CustomColor" />
+        </section>
+
+    </div>
+</div>
+
+<main >
+
+    <div id="first-container" @onclick="OnClick" style="opacity: @(IsBlurred ? "0" : "1"); transition: 0.3s;">
+
+        <section id="topSection">
+            
+            <span style="border-bottom: 3px solid #f0f0f0;padding-bottom: 2px;">Manage Accounts</span>
+
+        </section>
+
+        <section id="middleSection">
+            
+            <span>All Users | {127}</span>
+
+            <div>
+
+                <input type="text" placeholder="Search user"/>
+
+                <FluentButton style="font-family: 'Fira Code'">
+                    Filter
+                    <FluentIcon Value="@(new Icons.Regular.Size20.Filter())" Color="Color.Custom" CustomColor="#171b24" Slot="end"/>
+                </FluentButton>
+
+                <FluentButton>
+                    <FluentIcon Value="@(new Icons.Filled.Size20.GridDots())" Color="Color.Custom" CustomColor="#171b24" />
+                </FluentButton>
+
+            </div>
+
+        </section>
+
+        <section id="mainSection">
+
+        </section>
+
+    </div>
+
+    <div id="second-container" style="opacity: @(IsBlurred ? "0" : "1"); transition: 0.3s;">
+        
+        <div id="support-section">
+            
+            <span style="margin-left: auto;border-bottom: 3px solid #f0f0f0;padding-bottom: 2px;">Support Cases</span>
+
+            <br/>
+
+            @foreach (var i in Enumerable.Range(0,25))
+            {
+                <div id="case" @onclick="OpenDialog">
+
+                    <div>
+
+                        <section>
+                            <span>Lucas Baraka</span>
+                            <span style="margin-left: auto; color: darkorange">Case {1234}</span>
+                        </section>
+
+                        <span style="width:250px;white-space: nowrap;overflow: hidden;color:#CDCDCD;text-overflow:ellipsis;font-size:14px;font-weight:600">Issue with the app, please immediate support is needed</span>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</main>
+
+<Admin.Client.Components.Dialog Title="Support Case {#1234}" CssClass="@dialogCssClass" OnDialogClose="@(OnDialogClosed)">
+
+    <div id="dialog">
+
+        <section id="dialog-top">
+            <span style="border-bottom: 3px solid #f0f0f0;padding-bottom: 2px;">Lucas Bakari</span>
+            <div id="open">
+                <FluentIcon Value="@(new Icons.Filled.Size20.ShiftsOpen())" Color="Color.Accent" />
+                <span>Open</span>
+            </div>
+        </section>
+
+        <section id="dialog-body">
+
+            <p>
+                Dear Support Team,
+
+                I hope this message finds you well. I am writing to report an issue I've been experiencing since the latest software update on my device (Model: XYZ123).
+
+                After the update, the device has been unexpectedly shutting down multiple times throughout the day. I've tried rebooting and resetting the device to factory settings, but the issue persists.
+
+                Could you please provide assistance or guidance on how to resolve this issue? I look forward to your prompt response.
+            </p>
+
+        </section>
+
+        <section id="dialog-bottom">
+            <span style="color:transparent">ddd</span>
+            <FluentButton @onclick="ShowConfirmationAsync" BackgroundColor="#171b24" Style="font-family:'Fira Code';color:white;">
+                <FluentIcon Value="@(new Icons.Regular.Size20.ApprovalsApp())" Color="Color.Custom" CustomColor="#FFFFFF" Slot="start"/>
+                Close case
+            </FluentButton>
+
+        </section>
+
+    </div>
+
+</Admin.Client.Components.Dialog>
+
+
+@code{
+
+    private string dialogCssClass = "hidden";
+    public bool IsBlurred = false;
+    bool? canceled;
+    private string CustomColor = "#171b24";
+
+    private void OpenDialog()
+    {
+        IsBlurred = true;
+        dialogCssClass = "active";
+    }
+
+    private void OnDialogClosed()
+    {
+        dialogCssClass = "hidden";
+        // Perform any actions after the dialog closes (optional)
+        IsBlurred = false;
+    }
+
+    private void OnClick()
+    {
+        IsBlurred = false;
+        // Perform any actions when the button is clicked
+        OnDialogClosed();
+    }
+
+    private async Task ShowConfirmationAsync()
+    {
+        var dialog = await DialogService.ShowConfirmationAsync("Do you want close this case?", "Close case", "Abort");
+        var result = await dialog.Result;
+        canceled = result.Cancelled;
+        if (!result.Cancelled)
+        {
+            OnDialogClosed();
+        }
+    }
+
+    private void HighlightAction()
+    {
+        CustomColor = "#ffffff";
+    }
+
+    private void UnHighlightAction()
+    {
+        CustomColor = "#171b24";
+    }
+
+}

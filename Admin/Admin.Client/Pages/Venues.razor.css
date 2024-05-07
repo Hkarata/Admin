@@ -1,0 +1,75 @@
+﻿#topBar {
+    background-color: #ffffff;
+    padding: 10px;
+    display: flex;
+    height: 30px;
+    font-family: Bahnschrift;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+    #topBar div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
+
+main {
+    display: flex;
+    flex-direction: row;
+    height: 92vh;
+    width: 100%;
+    gap: 5px;
+}
+
+#first-container {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 70%;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    overflow-y: auto;
+    scrollbar-width: none;
+
+}
+
+#second-container {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 30%;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+#topSection{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#venueName {
+    border-bottom: 3px solid #f0f0f0;
+    padding-bottom: 2px;
+    font-family: 'Fira Code';
+}
+
+#venueDescr{
+    font-family: 'Fira Code';
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#vData{
+    font-weight: 500;
+}

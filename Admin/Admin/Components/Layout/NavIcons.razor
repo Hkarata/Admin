@@ -1,0 +1,68 @@
+﻿@implements IDisposable
+
+@inject NavigationManager NavigationManager
+
+<div id="container">
+
+    <NavLink ActiveClass="active" Match="NavLinkMatch.All" href="/" class="myNav">
+        <FluentIcon Value="@(new Icons.Regular.Size24.Home())" Color="Color.Custom" CustomColor="#FFFFFF" />
+    </NavLink>
+
+    <NavLink href="/questions" class="myNav">
+        <FluentIcon Value="@(new Icons.Regular.Size24.QuestionCircle())" Color="Color.Custom" CustomColor="#FFFFFF" />
+    </NavLink>
+
+    <NavLink href="/drivers" class="myNav">
+        <FluentIcon Value="@(new Icons.Regular.Size24.People())" Color="Color.Custom" CustomColor="#FFFFFF" />
+    </NavLink>
+
+    <NavLink href="/venues" class="myNav">
+        <FluentIcon Value="@(new Icons.Regular.Size24.BuildingDesktop())" Color="Color.Custom" CustomColor="#FFFFFF" />
+    </NavLink>
+
+</div>
+
+
+@code
+{
+    private string? currentUrl;
+
+    protected override void OnInitialized()
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}
+
+<style>
+    #container {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .myNav{
+        padding: 8px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+    }
+
+    .active {
+        background-color: #171b24;
+    }
+
+</style>

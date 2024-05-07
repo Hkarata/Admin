@@ -1,0 +1,289 @@
+﻿@page "/questions"
+@rendermode InteractiveServer
+
+
+
+<PageTitle>Questions</PageTitle>
+
+<div id="topBar">
+    <span>Questions</span>
+
+    <div>
+        <span>Quick Actions</span>
+
+        <section @onclick="OpenDialog" id="mySect" class="iconSect" @onmouseover="HighlightAction" @onmouseleave="UnHighlightAction">
+            <FluentIcon Value="@(new Icons.Regular.Size20.Add())" Color="Color.Custom" CustomColor="@CustomColor"/>
+        </section>
+
+        <FluentMenuButton @ref="languageMenu" OnMenuChanged="OnMenuChanged" ButtonAppearance="@Appearance.Outline" Text="Select language" Items="@items"></FluentMenuButton>
+    </div>
+</div>
+
+<Admin.Client.Components.Dialog Title="Create Question" CssClass="@dialogCssClass" OnDialogClose="@(OnDialogClosed)">
+
+    <EditForm Model="Input" id="question-form">
+        <DataAnnotationsValidator />
+
+        <InputTextArea @bind-Value="Input.Question" id="question" placeholder="Type the Question here.."/>
+        <ValidationMessage For="() => Input.Question" class="error"/>
+
+            <br/>
+        <FluentTabs ActiveTabId="tab-v1" Style="font-family: 'Fira Code'">
+            <FluentTab Label="Choice A" Id="tab-v1" Style="font-family: 'Fira Code'">
+
+                <InputTextArea @bind-Value="Input.Choice1" id="choice1" placeholder="Type the Choice here.."/>
+                <ValidationMessage For="() => Input.Choice1" class="error"/>
+
+            </FluentTab>
+            <FluentTab Label="Choice B" Id="tab-v2" Style="font-family: 'Fira Code'">
+                
+                <InputTextArea @bind-Value="Input.Choice2" id="choice2" placeholder="Type the Choice here.."/>
+                <ValidationMessage For="() => Input.Choice2" class="error"/>
+
+            </FluentTab>
+            <FluentTab Label="Choice C" Id="tab-v3" Style="font-family: 'Fira Code'">
+                
+                <InputTextArea @bind-Value="Input.Choice3" id="choice3" placeholder="Type the Choice here.."/>
+                <ValidationMessage For="() => Input.Choice3" class="error"/>
+
+            </FluentTab>
+            <FluentTab Label="Choice D" Id="tab-v4" Style="font-family: 'Fira Code'">
+                
+                <InputTextArea @bind-Value="Input.Choice4" id="choice4" placeholder="Type the Choice here.."/>
+                <ValidationMessage For="() => Input.Choice4" class="error"/>
+
+            </FluentTab>
+        </FluentTabs>
+        <br />
+        <span style="margin-bottom: 5px">Correct Choice</span>
+        <FluentRadioGroup @bind-Value=value1 >
+            <FluentRadio Value="1">Choice A</FluentRadio>
+            <FluentRadio Value="2">Choice B</FluentRadio>
+            <FluentRadio Value="3">Choice C</FluentRadio>
+            <FluentRadio Value="4">Choice D</FluentRadio>
+        </FluentRadioGroup>
+            <br/>
+        <FluentButton BackgroundColor="#171b24" ButtonType="ButtonType.Submit" Style="font-family: 'Fira Code';color:white;">Submit</FluentButton>
+    </EditForm>
+
+</Admin.Client.Components.Dialog>
+
+<main @onclick="OnClick" >
+
+    <div id="first-container" style="opacity: @(IsBlurred ? "0" : "1")">
+
+        <section id="question-section" >
+
+            <p> Question {@CurrentQn} of 25</p>
+
+            <p>
+                It's a sunny afternoon, and you're driving home from work.  You're approaching a busy intersection with a traffic light that just turned yellow. You're traveling a bit above the speed limit (around 45 mph in a 40 mph zone) and there are several cars stopped at the red light on the intersecting road.
+            </p>
+            <p>
+                What is the safest course of action in this situation?
+            </p>
+
+            <FluentStack Orientation="Orientation.Vertical">
+                <div>
+                    <label for="answerA">A) Slam on your brakes to come to a complete stop before the light turns red, even if it means skidding or causing a rear-end collision with the car behind you.</label>
+                    <input class="radio" type="radio" id="answerA" name="roadSafety" value="A">
+                </div>
+                <div>
+                    <label for="answerB">B) Maintain your current speed and proceed cautiously through the intersection when it's clear, assuming the other drivers will stop on red.</label>
+                    <input class="radio" type="radio" id="answerB" name="roadSafety" value="B">
+                </div>
+                <div style="border: 2px solid green;">
+                    <label for="answerC">C) Gradually slow down and come to a complete stop before the intersection if it's safe to do so without causing a hazard to other drivers behind you. (Safest Option)</label>
+                    <input class="radio" type="radio" id="answerC" name="roadSafety" value="C">
+                </div>
+                <div>
+                    <label for="answerD">D) Ignore the yellow light and continue through the intersection at your current speed.</label>
+                    <input class="radio" type="radio" id="answerD" name="roadSafety" value="D">
+                </div>
+            </FluentStack>
+
+        </section>
+        <br/>
+        <section id="bottom-section">
+
+            <NavLink class="mineNav" href="@guid">
+                <img src="/Images/analytics.gif" />
+                <span>Analysis</span>
+            </NavLink>
+
+            <NavLink class="mineNav" href="@guid">
+                <img src="/Images/analytics.gif" />
+                <span>Edit</span>
+            </NavLink>
+            
+        </section>
+
+    </div>
+
+    <div id="second-container" style="opacity: @(IsBlurred ? "0" : "1")">
+
+        <FluentGrid>
+
+            @foreach(var i in Enumerable.Range(1, 25))
+            {
+            <FluentGridItem xs="4">
+                <div class="fcard @(CurrentQn == i ? "active" : "")" @onclick="@(() => CurrentQn = i)">
+                    @i
+                </div>
+            </FluentGridItem>
+            }
+
+        </FluentGrid>
+
+    </div>
+
+</main>
+
+
+
+@code{
+    int? value1;
+    private string CustomColor = "#171b24";
+    private int CurrentQn = 1;
+    private Guid guid = Guid.NewGuid();
+    private FluentMenuButton languageMenu = new();
+    public bool IsBlurred = false;
+
+    private void HighlightAction()
+    {
+        CustomColor = "#ffffff";
+    }
+
+    private void UnHighlightAction()
+    {
+        CustomColor = "#171b24";
+    }
+
+    private Dictionary<string, string> items = new Dictionary<string, string>()
+    {
+        {"1","English"},
+        {"2","Swahili"},
+    };
+
+    private void OnMenuChanged(MenuChangeEventArgs args)
+    {
+    }
+
+    private string dialogCssClass = "hidden";
+
+    private void OpenDialog()
+    {
+        IsBlurred = true;
+        dialogCssClass = "active";
+    }
+
+    private void OnDialogClosed()
+    {
+        dialogCssClass = "hidden";
+        // Perform any actions after the dialog closes (optional)
+        IsBlurred = false;
+    }
+
+    private void OnClick()
+    {
+        IsBlurred = false;
+        // Perform any actions when the button is clicked
+        OnDialogClosed();
+    }
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new ();
+
+    private sealed class InputModel
+    {
+        [Required, Display(Name = "Question")]
+        public string Question { get; set; } = string.Empty;
+
+        [Required, Display(Name = "Choice 1")]
+        public string Choice1 { get; set; } = string.Empty;
+
+        [Required, Display(Name = "Choice 2")]
+        public string Choice2 { get; set; } = string.Empty;
+
+        [Required, Display(Name = "Choice 3")]
+        public string Choice3 { get; set; } = string.Empty;
+
+        [Required, Display(Name = "Choice 4")]
+        public string Choice4 { get; set; } = string.Empty;
+    }
+}
+
+<style>
+    .mineNav {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        align-items: center;
+        text-decoration: none;
+        font-family: Bahnschrift;
+        border: 1px solid #171b24;
+        padding: 0 10px 0 5px;
+        border-radius: 5px;
+    }
+
+        .mineNav img {
+            width: 30px;
+            height: 30px;
+            z-index: 0;
+        }
+
+    #question-form{
+        font-family: 'Fira Code';
+        display: flex;
+        flex-direction: column;
+    }
+
+    #question{
+        height: 100px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        padding: 5px;
+        font-family: 'Fira Code';
+
+    }
+
+    #choice1 {
+        height: 100px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        padding: 5px;
+        width: 98%;
+        font-family: 'Fira Code';
+    }
+
+    #choice2 {
+        height: 100px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        padding: 5px;
+        width: 98%;
+        font-family: 'Fira Code';
+    }
+    #choice3 {
+        height: 100px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        padding: 5px;
+        width: 98%;
+        font-family: 'Fira Code';
+    }
+
+    #choice4 {
+        height: 100px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        padding: 5px;
+        width: 98%;
+        font-family: 'Fira Code';
+    }
+
+    .error{
+        color: red;
+        font-style: italic;
+    }
+</style>

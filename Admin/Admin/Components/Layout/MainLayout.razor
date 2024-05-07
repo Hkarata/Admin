@@ -1,0 +1,26 @@
+﻿@using Microsoft.FluentUI.AspNetCore.Components
+@inherits LayoutComponentBase
+
+<div id="page">
+
+    <div class="sideBar">
+        
+        <NavMenu/>
+
+    </div>
+
+    <div id="content">
+
+        @Body
+        
+    </div>
+    <FluentDialogProvider @rendermode="InteractiveServer" />
+
+</div>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+

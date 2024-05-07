@@ -1,0 +1,36 @@
+﻿@rendermode InteractiveServer
+
+<div id="dialog" class="@CssClass">
+
+    <header>
+        <span style="border-bottom: 3px solid #f0f0f0;">@Title</span>
+        <FluentIcon @onclick="CloseDialog" Value="@(new Icons.Filled.Size24.CalendarCancel())" Color="@Color.Warning" />
+    </header>
+    <br/>
+    @ChildContent
+
+</div>
+
+@code {
+    [Parameter]
+    public string CssClass { get; set; } = "hidden"; // Initially hidden
+
+    [Parameter]
+    public string Title { get; set; } = "Beautiful Dialog";
+
+    [Parameter]
+    public string Message { get; set; } = "This dialog uses a subtle background blur...";
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; } // Allows custom content within the dialog
+
+    private async Task CloseDialog()
+    {
+        CssClass = "hidden"; // Hide the dialog
+        await OnDialogClose.InvokeAsync(); // Optional callback for closing actions
+    }
+
+    [Parameter]
+    public EventCallback<object> OnDialogClose { get; set; } // Optional callback for closing actions
+
+}
