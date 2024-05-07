@@ -117,8 +117,47 @@
         </div>
        
 
-        <Admin.Client.Components.Panel Title="Some Session" IsVisible="IsPanelVisible" OnPanelClose="@(OnPanelClosed)">
-            some panel
+        <Admin.Client.Components.Panel Title="" IsVisible="IsPanelVisible" OnPanelClose="@(OnPanelClosed)">
+            
+            <div class="inDiv">
+                <span style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;gap:10px">
+                    <span>11:00 - 11:45</span>
+                    <FluentIcon Value="@(new Icons.Regular.Size20.CheckmarkStarburst())" />
+                </span>
+                <span style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;gap:10px">
+                    <FluentIcon Value="@(new Icons.Regular.Size20.CalendarDate())" Color="Color.Custom" CustomColor="#bcbfbd" />
+                    <span style="font-size:12px;">{@DateTime.Now.ToShortDateString()}</span>
+                </span>
+                <span style="display:flex;flex-direction:row;justify-content:start;align-items:center;gap:2px">
+                    <FluentIcon Value="@(new Icons.Regular.Size20.People())" Color="Color.Custom" CustomColor="#bcbfbd" />
+                    <span style="font-size:12px;">{1/10}</span>
+                </span>
+                <FluentProgress Stroke="ProgressStroke.Normal" Max="10" Min="0" Value="1" Color="#00bcf2"></FluentProgress>
+            </div>
+            <br/>
+            <div id="middleDiv">
+
+                <FluentButton BackgroundColor="#171b24" Color="#FFFFFF" Style="font-family: 'Fira Code';margin-top:30%">
+                    <FluentIcon Value="@(new Icons.Regular.Size20.EyeTracking())" Slot="start" Color="Color.Custom" CustomColor="#FFFFFF" />
+                    View users list
+                </FluentButton>
+
+                <div style="margin-top:auto;display:flex;flex-direction:column">
+                    <span style="font-family:'Fira Code';margin-bottom:5px">Email users list</span>
+                    <input type="email" id="mail" required placeholder="venue.name@email.com" />
+                    <FluentButton BackgroundColor="#171b24" Color="#FFFFFF" Style="font-family: 'Fira Code';margin-top:10px">
+                        <FluentIcon Value="@(new Icons.Regular.Size20.Send())" Slot="start" Color="Color.Custom" CustomColor="#FFFFFF" />
+                        Send mail
+                    </FluentButton>
+                </div>
+
+            </div>
+
+            <FluentButton Type="ButtonType.Submit" BackgroundColor="#171b24" Color="#FFFFFF" Style="font-family: 'Fira Code';margin-top:auto">
+                <FluentIcon Value="@(new Icons.Regular.Size20.TimerOff())" Slot="start" Color="Color.Custom" CustomColor="#FFFFFF" />
+                Cancel session
+            </FluentButton>
+
         </Admin.Client.Components.Panel>
 
     </div>
