@@ -106,15 +106,15 @@
         <br/>
         <section id="bottom-section">
 
-            <NavLink class="mineNav" href="@guid">
-                <img src="/Images/analytics.gif" />
-                <span>Analysis</span>
-            </NavLink>
+            <FluentButton BackgroundColor="#171b24" Color="white" Style="font-family:'Fira Code'">
+                Question analysis
+                <FluentIcon Value="@(new Icons.Regular.Size20.BarcodeScanner())" Slot="start" Color="Color.Custom" CustomColor="#FFFFFF"/>
+            </FluentButton>
 
-            <NavLink class="mineNav" href="@guid">
-                <img src="/Images/analytics.gif" />
-                <span>Edit</span>
-            </NavLink>
+            <FluentButton BackgroundColor="#171b24" Color="white" Style="font-family:'Fira Code'">
+                <FluentIcon Slot="start" Value="@(new Icons.Regular.Size20.CodeTextEdit())" Color="Color.Custom" CustomColor="#FFFFFF" />
+                Edit question
+            </FluentButton>
             
         </section>
 
