@@ -84,7 +84,7 @@
 
     </div>
 
-    <div id="second-container" style="opacity: @(IsBlurred ? "0" : "1");transition: 0.3s ease-in-out">
+    <div id="second-container" style="pointer-events:@(IsListViewVisible ? "none" : "");opacity: @(IsBlurred ? "0" : "1");transition: 0.3s ease-in-out">
         
         <span style="font-family: 'Fira Code';margin-left: auto;border-bottom: 3px solid #f0f0f0;">Sessions</span>
 
@@ -137,7 +137,7 @@
             <br/>
             <div id="middleDiv">
 
-                <FluentButton BackgroundColor="#171b24" Color="#FFFFFF" Style="font-family: 'Fira Code';margin-top:30%">
+                <FluentButton @onclick="OpenListView" BackgroundColor="#171b24" Color="#FFFFFF" Style="font-family: 'Fira Code';margin-top:30%">
                     <FluentIcon Value="@(new Icons.Regular.Size20.EyeTracking())" Slot="start" Color="Color.Custom" CustomColor="#FFFFFF" />
                     View users list
                 </FluentButton>
@@ -192,6 +192,10 @@
 
 </Admin.Client.Components.Dialog>
 
+<Admin.Client.Components.ListView IsVisible="IsListViewVisible" OnListViewClose="@(CloseListView)">
+    aa
+</Admin.Client.Components.ListView>
+
 @code{
 
     [Parameter]
@@ -211,6 +215,7 @@
 
     public bool IsBlurred = false;
     public bool IsPanelVisible = false;
+    public bool IsListViewVisible = false;
     public bool IsDialogVisible = false;
     private string CustomColor = "#171b24";
     private string CustomColor2 = "#171b24";
@@ -279,6 +284,16 @@
     {
         // Perform any actions when the panel is closed
         IsPanelVisible = false;
+    }
+
+    private void OpenListView()
+    {
+        IsListViewVisible = true;
+    }
+
+    private void CloseListView()
+    {
+        IsListViewVisible = false;
     }
 
     [SupplyParameterFromForm]

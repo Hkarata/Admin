@@ -1,0 +1,34 @@
+﻿@rendermode InteractiveServer
+
+<div id="listView" style="@Style;display:@(IsVisible ? "flex" : "none");transition: 0.3s ease-in-out;">
+
+    <header>
+        <span style="border-bottom: 3px solid #f0f0f0;">Users list</span>
+        <FluentIcon @onclick="CloseListView" Value="@(new Icons.Filled.Size24.CalendarCancel())" Color="@Color.Custom" CustomColor="#171b24" />
+    </header>
+    <br/>
+    @ChildContent
+
+
+</div>
+
+@code {
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; } // Allows custom content within the dialog
+
+    [Parameter]
+    public string? Style { get; set; }
+
+    [Parameter]
+    public bool IsVisible { get; set; }
+
+    private async Task CloseListView()
+    {
+        await OnListViewClose.InvokeAsync(); // Optional callback for closing actions
+    }
+
+    [Parameter]
+    public EventCallback<object> OnListViewClose { get; set; } // Optional callback for closing actions
+
+}

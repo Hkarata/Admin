@@ -33,4 +33,10 @@
     <None Include="Pages\Bookings.razor" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Components\ListView.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
 </Project>
