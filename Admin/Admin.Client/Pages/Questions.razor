@@ -31,25 +31,25 @@
         <FluentTabs ActiveTabId="tab-v1" Style="font-family: 'Fira Code'">
             <FluentTab Label="Choice A" Id="tab-v1" Style="font-family: 'Fira Code'">
 
-                <InputTextArea @bind-Value="Input.Choice1" id="choice1" placeholder="Type the Choice here.."/>
+                <InputTextArea @bind-Value="Input.Choice1" id="choice1" placeholder="Type the Choice A here.."/>
                 <ValidationMessage For="() => Input.Choice1" class="error"/>
 
             </FluentTab>
             <FluentTab Label="Choice B" Id="tab-v2" Style="font-family: 'Fira Code'">
                 
-                <InputTextArea @bind-Value="Input.Choice2" id="choice2" placeholder="Type the Choice here.."/>
+                <InputTextArea @bind-Value="Input.Choice2" id="choice2" placeholder="Type the Choice B here.."/>
                 <ValidationMessage For="() => Input.Choice2" class="error"/>
 
             </FluentTab>
             <FluentTab Label="Choice C" Id="tab-v3" Style="font-family: 'Fira Code'">
                 
-                <InputTextArea @bind-Value="Input.Choice3" id="choice3" placeholder="Type the Choice here.."/>
+                <InputTextArea @bind-Value="Input.Choice3" id="choice3" placeholder="Type the Choice C here.."/>
                 <ValidationMessage For="() => Input.Choice3" class="error"/>
 
             </FluentTab>
             <FluentTab Label="Choice D" Id="tab-v4" Style="font-family: 'Fira Code'">
                 
-                <InputTextArea @bind-Value="Input.Choice4" id="choice4" placeholder="Type the Choice here.."/>
+                <InputTextArea @bind-Value="Input.Choice4" id="choice4" placeholder="Type the Choice D here.."/>
                 <ValidationMessage For="() => Input.Choice4" class="error"/>
 
             </FluentTab>
@@ -241,6 +241,7 @@
         border-radius: 5px;
         padding: 5px;
         font-family: 'Fira Code';
+        scrollbar-width: thin;
 
     }
 
@@ -251,6 +252,7 @@
         padding: 5px;
         width: 98%;
         font-family: 'Fira Code';
+        scrollbar-width: thin;
     }
 
     #choice2 {
@@ -260,6 +262,7 @@
         padding: 5px;
         width: 98%;
         font-family: 'Fira Code';
+        scrollbar-width: thin;
     }
     #choice3 {
         height: 100px;
@@ -268,6 +271,7 @@
         padding: 5px;
         width: 98%;
         font-family: 'Fira Code';
+        scrollbar-width: thin;
     }
 
     #choice4 {
@@ -277,6 +281,7 @@
         padding: 5px;
         width: 98%;
         font-family: 'Fira Code';
+        scrollbar-width: thin;
     }
 
     .error{
